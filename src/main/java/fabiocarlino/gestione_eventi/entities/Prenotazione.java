@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "prenotazioni")
-public class Prenotazioni {
+public class Prenotazione {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idPrenotazione;
@@ -23,10 +23,10 @@ public class Prenotazioni {
     @JoinColumn(name = "id_evento")
     private Evento evento;
 
-    public Prenotazioni() {
+    public Prenotazione() {
     }
 
-    public Prenotazioni(UUID idPrenotazione, LocalDate data, Utente utente, Evento evento) {
+    public Prenotazione(UUID idPrenotazione, LocalDate data, Utente utente, Evento evento) {
         this.idPrenotazione = idPrenotazione;
         this.data = data;
         this.utente = utente;
