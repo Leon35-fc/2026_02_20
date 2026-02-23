@@ -25,6 +25,7 @@ public class GestioneEventiApplication {
         evento.setOrganizzatore(utente);
          */
 
+
     }
 
 

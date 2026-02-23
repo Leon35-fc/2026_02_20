@@ -11,9 +11,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import riccardogulin.u5d12.exceptions.BadRequestException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UtentiService {
     private final UtentiRepo utentiRepo;
+
+    private List<Utente> utenteDB = new ArrayList<>();
 
     @Autowired
     public UtentiService(UtentiRepo utentiRepo) {
@@ -23,9 +28,13 @@ public class UtentiService {
     public Utente save(UtenteDTO payload) {
 
         //CONTROLLO L'EMAIL
-        this.utentiRepo.findByEmail(payload.email()).ifPresent(user -> {
-            throw new BadRequestException("L'email " + user.getEmail() + " è già presente.");
-        });
+        this.utentiRepo.
+                findByEmail(payload.email())
+                .ifPresent(user -> {
+                    throw new BadRequestException("L'email " + user.getEmail() + " è già presente.");
+                });
+
+        System.out.println(payload.email());
 
         //RECUPERO I DATI DELL'UTENTE DAL PAYLOAD
         Utente newUtente = new Utente(
@@ -34,6 +43,7 @@ public class UtentiService {
                 payload.email(),
                 payload.password(),
                 payload.ruoloUtente());
+
 
         //SALVO L'UTENTE
         Utente savedUtente = this.utentiRepo.save(newUtente);
@@ -55,4 +65,9 @@ public class UtentiService {
                 sortCriteria.equals("desc") ? Sort.by(orderBy).descending() : Sort.by(orderBy));
         return this.utentiRepo.findAll(pageable);
     }
+
+    public List<Utente> findAll() {
+        return this.utenteDB;
+    }
+
 }
